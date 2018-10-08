@@ -37,7 +37,6 @@ class Alco1 extends Component {
 
     grid[bird.height][bird.position] = `url(${SomeSpecial})`;
 
-
     // initial state
     this.state = {
       grid: grid,
@@ -46,7 +45,7 @@ class Alco1 extends Component {
       crashed: false,
       results: [],
       score: 0,
-      sound: true,
+      sound: localStorage.sound === undefined,
     };
 
     this.timerID = setInterval(() => {
@@ -155,6 +154,10 @@ class Alco1 extends Component {
 
   handleRestart = () => this.setState({ crashed: false });
 
+  handleSound = sound => {
+    this.setState({ sound: !sound });
+    this.state.sound ? localStorage.setItem('sound', true): localStorage.removeItem('sound')
+  };
 
   render() {
     return (
@@ -167,6 +170,8 @@ class Alco1 extends Component {
           <GameInfo
             score={this.state.score}
             results={this.state.results}
+            sound={this.state.sound}
+            handleSound={this.handleSound}
           />
         </div>
       </div>
